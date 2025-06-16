@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Post a Job</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body { 
+      font-family: 'Poppins', sans-serif; 
+      background-image: url('pj2.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .toolbar button { 
+      @apply p-1 hover:bg-gray-200 rounded; 
+      color: white; /* Make B and List buttons white */
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .form-container { 
+      animation: fadeIn 0.3s ease-out; 
+      position: relative; 
+      background: rgba(0, 0, 0, 0.3); /* Light black shade */
+      backdrop-filter: blur(8px); /* Subtle blur for glass effect */
+      -webkit-backdrop-filter: blur(8px);
+    }
+    /* Text color to dark gray for better visibility */
+    .form-container label, .form-container h2, .form-container p, 
+    .form-container input, .form-container select, .form-container #jobDesc { 
+      color: #333; /* Dark gray */
+    }
+    .form-container input::placeholder, .form-container #jobDesc:empty:before { 
+      color: rgba(51, 51, 51, 0.7); /* Slightly lighter dark gray for placeholders */
+    }
+    .form-container .border-gray-300 { 
+      border-color: rgba(255, 255, 255, 0.3); 
+    }
+    .form-container .bg-gray-100 { 
+      background: rgba(255, 255, 255, 0.1); 
+    }
+    /* Ensure buttons and links remain readable */
+    .form-container button[type="submit"] { 
+      color: white; /* Keep submit button text white for contrast */
+    }
+    .form-container .text-orange-500 { 
+      color: #ed8936; /* Keep auto-detect location button orange */
+    }
+    .form-container .text-gray-500 { 
+      color: #4a4a4a; /* Darker gray for cancel button */
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
+  <div class="rounded-xl p-4 sm:p-6 w-full sm:w-11/12 md:w-3/4 lg:w-[500px] max-h-[90vh] flex flex-col border border-purple-200 form-container">
+    <button onclick="window.location.href='profile.html'" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700" aria-label="Cancel and return to home">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+    <div class="mb-4 text-center">
+      <h2 class="text-lg sm:text-xl font-bold mb-1">Post a Job</h2>
+      <p class="text-xs sm:text-sm">Let job seekers find you!</p>
+    </div>
+
+    <form id="jobPostForm" class="flex-1 overflow-y-auto space-y-4 pr-2">
+      <!-- Job Title -->
+      <div>
+        <label class="block mb-1 font-semibold text-sm">Job Title *</label>
+        <input type="text" id="jobTitle" placeholder="e.g., Cashier" class="w-full border border-gray-300 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500" required>
+      </div>
+
+      <!-- Job Time -->
+      <div>
+        <label class="block mb-1 font-semibold text-sm">Job Type *</label>
+        <select id="jobTime" required class="w-full border border-gray-300 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500">
+          <option value="">Select...</option>
+          <option>Part-Time</option>
+          <option>One-Time-Gig</option>
+          <option>Freelance</option>
+          <option>Remote</option>
+        </select>
+      </div>
+
+      <!-- Job Role -->
+      <div>
+        <label class="block mb-1 font-semibold text-sm">Job Role</label>
+        <input type="text" id="jobRole" placeholder="e.g., Assistant" class="w-full border border-gray-300 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500">
+      </div>
+
+      <!-- Vacancies -->
+      <div>
+        <label class="block mb-1 font-semibold text-sm">Vacancies *</label>
+        <input type="number" id="vacancies" placeholder="e.g., 3" min="1" class="w-full border border-gray-300 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500" required>
+      </div>
+
+      <!-- Phone Number -->
+      <div>
+        <label class="block mb-1 font-semibold text-sm">Contact Number *</label>
+        <div class="flex items-center border border-gray-300 rounded-lg p-2 focus-within:ring-2 focus-within:ring-orange-500" style="background: white;">
+          <span class="text-black mr-1">+91</span>
+          <input type="tel" id="phoneNumber" name="phoneNumber" pattern="^[6-9]\d{9}$" maxlength="10" placeholder="10-digit number" required class="w-full focus:outline-none text-sm" />
+        </div>
+      </div>
+
+      <!-- Pay -->
+      <div>
+        <label class="block mb-1 font-semibold text-sm">Pay (₹) *</label>
+        <input type="text" id="pay" placeholder="e.g., 200/day" class="w-full border border-gray-300 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500" required>
+      </div>
+
+      <!-- Job Date -->
+      <div>
+        <label class="block mb-1 font-semibold text-sm">Job Date *</label>
+        <input type="date" id="jobDate" class="w-full border border-gray-300 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500" required>
+      </div>
+
+      <!-- Job Time (Using time picker with AM/PM) -->
+      <div>
+        <label for="startTime" class="block text-sm font-medium">Start Time *</label>
+        <div class="flex space-x-2">
+          <input 
+            type="time" 
+            id="startTime" 
+            class="w-3/4 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:outline-none" 
+            required 
+          />
+          <select id="startTimePeriod" class="w-1/4 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:outline-none">
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+          </select>
+        </div>
+      </div>
+      
+      <div>
+        <label for="endTime" class="block text-sm font-medium">End Time *</label>
+        <div class="flex space-x-2">
+          <input 
+            type="time" 
+            id="endTime" 
+            class="w-3/4 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:outline-none" 
+            required 
+          />
+          <select id="endTimePeriod" class="w-1/4 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:outline-none">
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+          </select>
+        </div>
+      </div>
+      
+      <!-- Location (Manual and Auto) -->
+      <div>
+        <label class="block mb-1 font-semibold text-sm">Location Link</label>
+        <input type="url" id="locationLink" placeholder="Google Maps link" class="w-full border border-gray-300 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500">
+        <button type="button" onclick="getLocation()" class="mt-1 text-white hover:underline text-sm">Auto-detect my location</button>
+      </div>
+
+      <!-- Job Description -->
+      <div>
+        <label class="block mb-1 font-semibold text-sm">Job Description *</label>
+        <div class="border border-gray-300 rounded-lg">
+          <div class="toolbar flex items-center space-x-1 p-1 bg-gray-100">
+            <button type="button" onclick="format('bold')"><b>B</b></button>
+            <button type="button" onclick="format('insertUnorderedList')">• List</button>
+          </div>
+          <div id="jobDesc" contenteditable="true" class="p-2 min-h-[80px] max-h-[120px] overflow-y-auto focus:outline-none text-sm focus:ring-orange-500"></div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="pt-2">
+        <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-lg font-semibold text-sm transition">Post Job</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function format(command) {
+      document.execCommand(command, false, null);
+    }
+
+    function getLocation() {
+      const locationLinkInput = document.getElementById('locationLink');
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            const link = `https://www.google.com/maps?q=${lat},${lon}`;
+            locationLinkInput.value = link;
+          },
+          (error) => {
+            let errorMessage = "Location access denied.";
+            switch (error.code) {
+              case error.PERMISSION_DENIED:
+                errorMessage = "Location access denied. Please enable location services.";
+                break;
+              case error.POSITION_UNAVAILABLE:
+                errorMessage = "Location information is unavailable.";
+                break;
+              case error.TIMEOUT:
+                errorMessage = "The request to get your location timed out.";
+                break;
+              default:
+                errorMessage = "An unknown error occurred while fetching your location.";
+            }
+            alert(errorMessage);
+          },
+          { timeout: 10000, enableHighAccuracy: true }
+        );
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    }
+
+    // Enforce 12-hour format and restrict hours to 1-12, minutes to 00-59
+    function enforce12HourFormat(inputId, periodId) {
+      const input = document.getElementById(inputId);
+      const periodSelect = document.getElementById(periodId);
+
+      input.addEventListener('change', () => {
+        const [hours, minutes] = input.value.split(':').map(Number);
+        if (!isNaN(hours) && !isNaN(minutes)) {
+          // Restrict hours to 1-12
+          if (hours > 12 || hours < 1) {
+            alert('Hours must be between 1 and 12.');
+            input.value = ''; // Reset the input
+            periodSelect.value = 'AM'; // Reset period
+            input.dataset.hours24 = ''; // Clear stored value
+            return;
+          }
+
+          // Restrict minutes to 00-59 (already enforced by input type="time", but added for clarity)
+          if (minutes > 59) {
+            alert('Minutes must be between 00 and 59.');
+            input.value = `${hours.toString().padStart(2, '0')}:59`; // Cap minutes at 59
+            return;
+          }
+
+          const period = hours >= 12 ? 'PM' : 'AM';
+          const adjustedHours = hours % 12 || 12; // Convert 0 or 12 to 12
+          input.value = `${adjustedHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+          periodSelect.value = period;
+        }
+      });
+
+      // When AM/PM changes, adjust the time if necessary
+      periodSelect.addEventListener('change', () => {
+        let [hours, minutes] = input.value.split(':').map(Number);
+        const period = periodSelect.value;
+
+        if (isNaN(hours) || isNaN(minutes)) return; // Skip if input is invalid
+
+        if (period === 'PM' && hours < 12) {
+          hours += 12; // Convert to 24-hour for internal use
+        } else if (period === 'AM' && hours === 12) {
+          hours = 0; // 12 AM is 00:00
+        } else if (period === 'AM' && hours > 12) {
+          hours -= 12; // Convert back to 12-hour
+        }
+
+        input.dataset.hours24 = hours; // Store the 24-hour value for validation
+      });
+    }
+
+    // Apply 12-hour enforcement to both time inputs
+    enforce12HourFormat('startTime', 'startTimePeriod');
+    enforce12HourFormat('endTime', 'endTimePeriod');
+
+    document.getElementById('jobPostForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const startTimeInput = document.getElementById('startTime');
+      const endTimeInput = document.getElementById('endTime');
+      const startTime = startTimeInput.value;
+      const endTime = endTimeInput.value;
+      const startPeriod = document.getElementById('startTimePeriod').value;
+      const endPeriod = document.getElementById('endTimePeriod').value;
+
+      if (!startTime || !endTime) {
+        alert('Please enter valid start and end times.');
+        return;
+      }
+
+      const job = {
+        title: document.getElementById('jobTitle').value.trim(),
+        time: document.getElementById('jobTime').value,
+        role: document.getElementById('jobRole').value.trim(),
+        vacancies: document.getElementById('vacancies').value,
+        phone: document.getElementById('phoneNumber').value.trim(),
+        pay: document.getElementById('pay').value.trim(),
+        date: document.getElementById('jobDate').value,
+        startTime: `${startTime} ${startPeriod}`,
+        endTime: `${endTime} ${endPeriod}`,
+        locationLink: document.getElementById('locationLink').value.trim(),
+        description: document.getElementById('jobDesc').innerText.trim()
+      };
+
+      if (!job.title || !job.time || !job.vacancies || !job.phone || !job.pay || !job.date || !job.startTime || !job.endTime || !job.description) {
+        alert('Please fill all required fields.');
+        return;
+      }
+
+      // Validate phone number
+      if (!/^[6-9]\d{9}$/.test(job.phone)) {
+        alert('Contact number must be a valid 10-digit number starting with 6, 7, 8, or 9.');
+        return;
+      }
+
+      // Validate time range using 24-hour format for comparison
+      let startHours = parseInt(startTimeInput.dataset.hours24) || parseInt(startTime.split(':')[0]);
+      let endHours = parseInt(endTimeInput.dataset.hours24) || parseInt(endTime.split(':')[1]);
+
+      if (startPeriod === 'PM' && startHours < 12) startHours += 12;
+      if (startPeriod === 'AM' && startHours === 12) startHours = 0;
+      if (endPeriod === 'PM' && endHours < 12) endHours += 12;
+      if (endPeriod === 'AM' && endHours === 12) endHours = 0;
+
+      const startDateTime = new Date(`1970-01-01T${startHours}:${startTime.split(':')[1]}:00`);
+      const endDateTime = new Date(`1970-01-01T${endHours}:${endTime.split(':')[1]}:00`);
+
+      if (endDateTime <= startDateTime) {
+        alert('End time must be after start time.');
+        return;
+      }
+
+      // Save to localStorage
+      const jobs = JSON.parse(localStorage.getItem('jobs')) || [];
+      jobs.push(job);
+      localStorage.setItem('jobs', JSON.stringify(jobs));
+
+      alert('Job posted successfully!');
+      this.reset();
+      document.getElementById('jobDesc').innerHTML = '';
+      window.location.href = 'index.html';
+    });
+  </script>
+</body>
+</html>
